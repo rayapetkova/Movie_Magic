@@ -1,8 +1,9 @@
-import Movie from "../models/Movie-old.js";
+import Movie from "../models/Movie.js";
 
 export default {
     getAll(filter) {
-        return Movie.find(filter);
+        console.log(Movie.find());
+        return Movie.find();
     },
     getOne(movieId) {
         return Movie.find({ _id: movieId });
