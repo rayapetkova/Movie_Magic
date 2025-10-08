@@ -12,7 +12,7 @@ movieController.post('/create', (req, res) => {
 
     movieService.create(movieData);
 
-    res.end()
+    res.redirect('/');
 });
 
 export default movieController;
