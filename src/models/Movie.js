@@ -48,6 +48,12 @@ export default class Movie {
             result = movies.find(movie => movie._id === filter._id);
         }
 
+        if (filter.year) {
+            result = result.filter(movie => movie.year === filter.year);
+        }
+
+        console.log(result);
+
         return result;
     }
 
