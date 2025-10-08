@@ -48,11 +48,19 @@ export default class Movie {
             result = movies.find(movie => movie._id === filter._id);
         }
 
+        console.log(filter)
+
+        if (filter.title) {
+            result = result.filter(movie => movie.title.toLowerCase().includes(filter.title.toLowerCase()));
+        }
+
+        if (filter.genre) {
+            result = result.filter(movie => movie.genre.toLowerCase().includes(filter.genre.toLowerCase()));
+        }
+
         if (filter.year) {
             result = result.filter(movie => movie.year === filter.year);
         }
-
-        console.log(result);
 
         return result;
     }
