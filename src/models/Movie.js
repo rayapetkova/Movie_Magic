@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 const movies = [
     {
         id: "a3682672-0ee4-1284-8759-35ee253329zv",
@@ -44,6 +46,7 @@ export default class Movie {
     }
 
     save() {
+        this.data._id = uuid();
         movies.push(this.data);
 
         console.log(movies);
