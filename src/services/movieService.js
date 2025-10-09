@@ -4,6 +4,10 @@ export default {
     getAll(filter) {
         let movies = Movie.find();
 
+        if (!filter) {
+            return movies;
+        }
+
         if (filter.title) {
             movies = movies.find({
                 title: { $regex: filter.title, $options: 'i' }

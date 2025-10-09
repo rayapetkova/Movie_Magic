@@ -21,7 +21,7 @@ movieController.get('/:movieId/details', async (req, res) => {
     const movieDetails = await movieService.getOne(movieId);
 
     res.render('details', { movieDetails });
-})
+});
 
 movieController.get('/search', async (req, res) => {
     const filter = req.query;
@@ -29,6 +29,6 @@ movieController.get('/search', async (req, res) => {
     let movies = await movieService.getAll(filter);
 
     res.render('search', { movies, filter });
-})
+});
 
 export default movieController;
