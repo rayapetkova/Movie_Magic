@@ -23,10 +23,10 @@ movieController.get('/:movieId/details', async (req, res) => {
     res.render('details', { movieDetails });
 })
 
-movieController.get('/search', (req, res) => {
+movieController.get('/search', async (req, res) => {
     const filter = req.query;
 
-    const movies = movieService.getAll(filter);
+    let movies = await movieService.getAll(filter);
 
     res.render('search', { movies, filter });
 })
