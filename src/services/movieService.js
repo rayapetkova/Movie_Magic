@@ -31,5 +31,11 @@ export default {
     },
     create(movieData) {
         return Movie.create(movieData);
+    },
+    async attachCast(movieId, castId) {
+        const movie = await Movie.findById(movieId);
+        movie.casts.push(castId);
+
+        return movie.save();
     }
 }

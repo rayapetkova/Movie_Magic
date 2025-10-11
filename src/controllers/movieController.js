@@ -33,6 +33,15 @@ movieController.get('/:movieId/attach', async (req, res) => {
     res.render('casts/attach', { movieDetails, casts });
 });
 
+movieController.post('/:movieId/attach', async (req, res) => {
+    const movieId = req.params.movieId;
+    const castId = req.body.cast;
+
+    await movieService.attachCast(movieId, castId);
+
+    res.redirect(`movies/${movieId}/details`);
+});
+
 movieController.get('/search', async (req, res) => {
     const filter = req.query;
 
