@@ -27,7 +27,7 @@ export default {
         return movies;
     },
     getOne(movieId) {
-        return Movie.findById(movieId);
+        return Movie.findById(movieId).populate('casts');
     },
     create(movieData) {
         return Movie.create(movieData);
