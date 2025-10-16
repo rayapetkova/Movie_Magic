@@ -34,7 +34,7 @@ movieController.get('/:movieId/attach', isAuth, async (req, res) => {
     res.render('casts/attach', { movieDetails, casts });
 });
 
-movieController.post('/:movieId/attach', async (req, res) => {
+movieController.post('/:movieId/attach', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const castId = req.body.cast;
 

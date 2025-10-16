@@ -8,7 +8,7 @@ castController.get('/create', isAuth, (req, res) => {
     res.render('casts/create');
 });
 
-castController.post('/create', async (req, res) => {
+castController.post('/create', isAuth, async (req, res) => {
     const castData = req.body;
 
     castService.create(castData);
