@@ -2,8 +2,7 @@ import User from "../models/User.js"
 
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = "jwefjef-jwmefonweokdq-qj39r3r023f9onepfo2403ryqdi"
+import 'dotenv/config';
 
 export default {
     register(userData) {
@@ -22,7 +21,7 @@ export default {
             email: user.email
         };
 
-        const token = jwt.sign(payload, JWT_SECRET, {expiresIn: '2h'});
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '2h'});
 
         return token;
     }
