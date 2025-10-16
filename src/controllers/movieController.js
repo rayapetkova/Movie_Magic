@@ -23,7 +23,12 @@ movieController.get('/:movieId/details', async (req, res) => {
 
     const movieDetails = await movieService.getOne(movieId);
 
-    res.render('movies/details', { movieDetails });
+    let isCreator = false;
+    if (req.user) {
+        isCreator = movieDetails.creator == req.user.id;
+    }
+
+    res.render('movies/details', { movieDetails, isCreator });
 });
 
 movieController.get('/:movieId/attach', isAuth, async (req, res) => {
