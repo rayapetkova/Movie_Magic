@@ -29,8 +29,11 @@ export default {
     getOne(movieId) {
         return Movie.findById(movieId).populate('casts');
     },
-    create(movieData) {
-        return Movie.create(movieData);
+    create(movieData, userId) {
+        return Movie.create({
+            ...movieData,
+            creator: userId
+        });
     },
     async attachCast(movieId, castId) {
         const movie = await Movie.findById(movieId);
