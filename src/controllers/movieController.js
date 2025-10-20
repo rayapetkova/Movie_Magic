@@ -51,12 +51,29 @@ movieController.post('/:movieId/attach', isAuth, async (req, res) => {
     res.redirect(`/movies/${movieId}/details`);
 });
 
-movieController.get('/:movieId/edit', isMovieCreator, async (req, res) => {
-    const movie = await movieService.getOne(req.params.movieId);
-    console.log(movie);
+movieController.get('/:movieId/edit', isAuth, isMovieCreator, async (req, res) => {
+    try {
+        const movie = await movieService.getOne(req.params.movieId);
 
-    res.render('movies/edit', { movie });
-})
+        res.render('movies/edit', { movie });
+    } catch {
+        return res.status(404).render('404', { error: "Movie not found!" });
+    }
+});
+
+movieController.post('/:movieId/edit', isAuth, isMovieCreator, async (req, res) => {
+    const movieId = req.params.movieId;
+    const movieData = req.body;
+
+    try {
+        await movieService.edit(movieId, movieData);
+
+        return res.redirect(`/movies/${movieId}/details`);
+    } catch {
+        return res.status(404).render('404', { error: "Movie cannot be edited!" });
+    }
+
+});
 
 movieController.get('/search', async (req, res) => {
     const filter = req.query;
