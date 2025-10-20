@@ -38,6 +38,9 @@ export default {
     async edit(movieId, movieData) {
         return await Movie.findByIdAndUpdate(movieId, movieData, { runValidators: true });
     },
+    async delete(movieId) {
+        return await Movie.findByIdAndDelete(movieId);
+    },
     async attachCast(movieId, castId) {
         const movie = await Movie.findById(movieId);
         movie.casts.push(castId);
