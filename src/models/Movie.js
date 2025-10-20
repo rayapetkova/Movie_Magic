@@ -15,7 +15,8 @@ const movieSchema = new Schema({
     }],
     creator: {
         type: Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: [true, "Creator is required!"]
     }
 });
 
