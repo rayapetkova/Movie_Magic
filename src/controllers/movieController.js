@@ -2,6 +2,8 @@ import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
+import isMovieCreator from "../middlewares/movieMiddleware.js";
+import Movie from "../models/Movie.js";
 
 const movieController = Router();
 
@@ -48,6 +50,13 @@ movieController.post('/:movieId/attach', isAuth, async (req, res) => {
 
     res.redirect(`/movies/${movieId}/details`);
 });
+
+movieController.get('/:movieId/edit', isMovieCreator, async (req, res) => {
+    const movie = await movieService.getOne(req.params.movieId);
+    console.log(movie);
+
+    res.render('movies/edit', { movie });
+})
 
 movieController.get('/search', async (req, res) => {
     const filter = req.query;
