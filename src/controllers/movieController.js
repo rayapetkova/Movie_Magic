@@ -72,8 +72,15 @@ movieController.post('/:movieId/edit', isAuth, isMovieCreator, async (req, res) 
     } catch {
         return res.status(404).render('404', { error: "Movie cannot be edited!" });
     }
-
 });
+
+movieController.get('/:movieId/delete', isAuth, isMovieCreator, async (req, res) => {
+    const movieId = req.params.movieId;
+
+    await movieService.delete(movieId);
+
+    return res.redirect('/');
+})
 
 movieController.get('/search', async (req, res) => {
     const filter = req.query;
