@@ -22,6 +22,9 @@ try {
 
 app.engine('hbs', handlebars.engine({
     extname: 'hbs',
+    helpers: {
+        equals: (a, b) => a === b
+    },
     runtimeOptions: {
         allowProtoMethodsByDefault: true,
         allowProtoPropertiesByDefault: true
