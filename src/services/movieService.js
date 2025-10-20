@@ -35,6 +35,9 @@ export default {
             creator: userId
         });
     },
+    async edit(movieId, movieData) {
+        return await Movie.findByIdAndUpdate(movieId, movieData, { runValidators: true });
+    },
     async attachCast(movieId, castId) {
         const movie = await Movie.findById(movieId);
         movie.casts.push(castId);
