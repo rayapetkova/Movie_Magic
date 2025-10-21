@@ -3,8 +3,11 @@ import bcrypt from "bcrypt";
 import { generateAuthToken } from '../utils/tokenUtils.js'
 
 export default {
-    register(userData) {
-        return User.create(userData);
+    async register(userData) {
+        const user = await User.create(userData);
+        const token = generateAuthToken(user);
+
+        return token
     },
     async login(email, password) {
         const user = await User.findOne({ email: email });
