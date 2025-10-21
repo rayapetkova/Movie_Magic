@@ -36,7 +36,7 @@ const movieSchema = new Schema({
     imageUrl: {
         type: String,
         required: [true, 'Image URL is required.'],
-        match: [/^https?:\/\//, 'Image URL has invlid format.']
+        match: [/^https?:\/\//, 'Image URL has invalid format.']
     },
     rating: {
         type: Number,
@@ -47,7 +47,7 @@ const movieSchema = new Schema({
     description: {
         type: String,
         required: [true, 'Description is required.'],
-        minLength: [20, 'Description must be at lest 20 characters long.'],
+        minLength: [20, 'Description must be at least 20 characters long.'],
         match: [/^[a-zA-z0-9 ]+$/, 'Description should consist of only letters, digits and whitespaces.']
     },
     casts: [{
