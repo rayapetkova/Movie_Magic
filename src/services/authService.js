@@ -1,8 +1,6 @@
 import User from "../models/User.js"
-
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
-import 'dotenv/config';
+import { generateAuthToken } from '../utils/tokenUtils.js'
 
 export default {
     register(userData) {
@@ -16,12 +14,7 @@ export default {
             throw new Error('Invalid user or password!');
         }
 
-        const payload = {
-            id: user.id,
-            email: user.email
-        };
-
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '2h'});
+        const token = generateAuthToken(user);
 
         return token;
     }
