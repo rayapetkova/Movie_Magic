@@ -21,9 +21,14 @@ export default {
     },
     async login(email, password) {
         const user = await User.findOne({ email: email });
+
+        if (!user) {
+            throw new Error('Invalid user or password!');
+        }
+
         const validatePassword = await bcrypt.compare(password, user.password);
 
-        if (!user || !validatePassword) {
+        if (!validatePassword) {
             throw new Error('Invalid user or password!');
         }
 
