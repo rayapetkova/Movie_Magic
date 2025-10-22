@@ -12,7 +12,7 @@ const movieSchema = new Schema({
         required: [true, 'Category is required'],
         enum: {
             values: ['tv-show', 'animation', 'movie', 'documentary', 'short-film'],
-            message: 'Category invalid'
+            message: 'Category is invalid. You should choose one of the options.'
         }
     },
     genre: {
@@ -52,7 +52,7 @@ const movieSchema = new Schema({
     },
     casts: [{
         type: Types.ObjectId,
-        ref: ' Cast'
+        ref: 'Cast'
     }],
     creator: {
         type: Types.ObjectId,
