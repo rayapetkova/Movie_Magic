@@ -10,16 +10,14 @@ export default {
             throw new Error('User already exists.');
         }
 
-        console.log(userData);
-
         if (userData.password !== userData.repeatPassword) {
-            throw new Error("Passwords don't match")
+            throw new Error("Passwords don't match.");
         }
 
         const user = await User.create(userData);
         const token = generateAuthToken(user);
 
-        return token
+        return token;
     },
     async login(email, password) {
         const user = await User.findOne({ email: email });
