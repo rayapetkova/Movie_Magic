@@ -3,7 +3,6 @@ import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
 import isMovieCreator from "../middlewares/movieMiddleware.js";
-import Movie from "../models/Movie.js";
 import { getErrorMessage } from "../utils/errorUtils.js";
 
 const movieController = Router();
