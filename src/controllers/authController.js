@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authService from "../services/authService.js";
 import { isAuth, isGuest } from "../middlewares/authMiddleware.js";
+import { getErrorMessage } from "../utils/errorUtils.js";
 
 const authController = Router();
 
@@ -18,13 +19,7 @@ authController.post('/register', isGuest, async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        let errorMessage = '';
-
-        if (err.errors) {
-            errorMessage = Object.values(err.errors)[0].message;
-        } else {
-            errorMessage = err.message;
-        }
+        const errorMessage = getErrorMessage(err);
 
         res.status(400).render('auth/register', { error: errorMessage, user: userData });
     }
@@ -44,7 +39,7 @@ authController.post('/login', isGuest, async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        const errorMessage = err.message;
+        const errorMessage = getErrorMessage(err);
 
         res.status(400).render('auth/login', { error: errorMessage, user: {email, password} })
     }
