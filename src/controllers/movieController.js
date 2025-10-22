@@ -29,14 +29,18 @@ movieController.post('/create', isAuth, async (req, res) => {
 movieController.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
 
-    const movieDetails = await movieService.getOne(movieId);
+    try {
+        const movieDetails = await movieService.getOne(movieId);
 
-    let isCreator = false;
-    if (req.user) {
-        isCreator = movieDetails.creator == req.user.id;
+        let isCreator = false;
+        if (req.user) {
+            isCreator = movieDetails.creator == req.user.id;
+        }
+
+        res.render('movies/details', { movieDetails, isCreator });
+    } catch {
+        return res.status(404).render('404', { error: "Movie not found!" });
     }
-
-    res.render('movies/details', { movieDetails, isCreator });
 });
 
 movieController.get('/:movieId/attach', isAuth, async (req, res) => {
@@ -58,13 +62,9 @@ movieController.post('/:movieId/attach', isAuth, async (req, res) => {
 });
 
 movieController.get('/:movieId/edit', isAuth, isMovieCreator, async (req, res) => {
-    try {
-        const movie = await movieService.getOne(req.params.movieId);
+    const movie = await movieService.getOne(req.params.movieId);
 
-        res.render('movies/edit', { movie });
-    } catch {
-        return res.status(404).render('404', { error: "Movie not found!" });
-    }
+    res.render('movies/edit', { movie });
 });
 
 movieController.post('/:movieId/edit', isAuth, isMovieCreator, async (req, res) => {
@@ -75,15 +75,23 @@ movieController.post('/:movieId/edit', isAuth, isMovieCreator, async (req, res) 
         await movieService.edit(movieId, movieData);
 
         return res.redirect(`/movies/${movieId}/details`);
-    } catch {
-        return res.status(404).render('404', { error: "Movie cannot be edited!" });
+    } catch (err) {
+        const errorMessage = getErrorMessage(err);
+
+        return res.status(400).render('movies/edit', { error: errorMessage, movie: movieData });
     }
 });
 
 movieController.get('/:movieId/delete', isAuth, isMovieCreator, async (req, res) => {
     const movieId = req.params.movieId;
 
-    await movieService.delete(movieId);
+    try {
+        await movieService.delete(movieId);
+    } catch (err) {
+        const errorMessage = getErrorMessage(err);
+
+        return res.status(404).render('404', { error: errorMessage });
+    }
 
     return res.redirect('/');
 })
