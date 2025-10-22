@@ -29,11 +29,13 @@ export default {
     getOne(movieId) {
         return Movie.findById(movieId).populate('casts');
     },
-    create(movieData, userId) {
-        return Movie.create({
+    async create(movieData, userId) {
+        const movie = await Movie.create({
             ...movieData,
             creator: userId
         });
+
+        return movie;
     },
     async edit(movieId, movieData) {
         return await Movie.findByIdAndUpdate(movieId, movieData, { runValidators: true });
