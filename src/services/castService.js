@@ -12,7 +12,9 @@ export default {
 
         return casts;
     },
-    create(castData) {
-        return Cast.create(castData);
+    async create(castData) {
+        const cast = await Cast.create(castData);
+
+        return cast;
     }
 }
