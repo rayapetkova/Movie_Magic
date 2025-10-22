@@ -37,11 +37,17 @@ authController.get('/login', isGuest, (req, res) => {
 authController.post('/login', isGuest, async (req, res) => {
     const { email, password } = req.body;
 
-    const token = await authService.login(email, password);
+    try {
+        const token = await authService.login(email, password);
 
-    res.cookie('auth', token);
+        res.cookie('auth', token);
 
-    res.redirect('/');
+        res.redirect('/');
+    } catch (err) {
+        const errorMessage = err.message;
+
+        res.status(400).render('auth/login', { error: errorMessage, user: {email, password} })
+    }
 })
 
 authController.get('/logout', isAuth, async (req, res) => {
